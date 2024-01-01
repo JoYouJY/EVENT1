@@ -343,14 +343,14 @@ window.getAggressiveGasPrice = async function() {
 
 //--------------------------------------
 const fantomChain = {
-  chainId: "0x" + (64165).toString(16), // Convert decimal to hexadecimal
-  chainName: "Fantom Sonic Builders Testnet", // Network name
-  rpcUrls: ["https://rpc.sonic.fantom.network/"], // RPC URL
+  chainId: "0x" + (250).toString(16), // Convert decimal to hexadecimal
+  chainName: "Fantom", // Network name
+  rpcUrls: ["https://rpc.ankr.com/fantom"], // RPC URL
   nativeCurrency: {
     symbol: "FTM", // Native token symbol
     decimals: 18, // Native token decimals
   },
-  blockExplorerUrls: ["https://public-sonic.fantom.network"], // Block explorer URL
+  blockExplorerUrls: ["https://ftmscan.com/"], // Block explorer URL
 };
 
 const addFantomChain = async () => {
@@ -562,7 +562,7 @@ document.getElementById('viewPaintSwap').addEventListener('click', function() {
 
 
 //----------------------------------
-var contractaddress = '0x711B45F26ACb2946fD2FaF58Af656134820A255B';
+var contractaddress = '0xE87537D7cFB6a51D33D5d26eA8F13ea9362cBFfe';
 var mintabi = [
 	{
 		"anonymous": false,
