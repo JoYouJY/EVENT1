@@ -20,7 +20,6 @@ async function GetWeb3(){
 
   console.log("getWeb3");
   console.log(Web3.givenProvider);
-
   web3 = new Web3(Web3.givenProvider);
 
 
@@ -104,6 +103,9 @@ async function GetWeb3(){
 // const from = await web3.eth.getAccounts();
 var userAccountsGol ;
 async function ConnectWallet() {
+  addFantomChain();
+  GetWeb3();
+  FAEVENT1 = new web3.eth.Contract(mintabi, contractaddress);
   console.log("ConnectWallet()");
 
   await GetWeb3();
@@ -129,7 +131,7 @@ async function ConnectWallet() {
 }
 
 // Example usage
-ConnectWallet();
+//ConnectWallet();
 
 
 var isfullscreen = false;
@@ -344,6 +346,7 @@ window.getAggressiveGasPrice = async function() {
 //--------------------------------------
 const fantomChain = {
   chainId: "0x" + (250).toString(16), // Convert decimal to hexadecimal
+  networkId: "0xfa", // Fantom Opera's network ID
   chainName: "Fantom", // Network name
   rpcUrls: ["https://rpc.ankr.com/fantom"], // RPC URL
   nativeCurrency: {
@@ -357,25 +360,39 @@ const addFantomChain = async () => {
   if (window.ethereum && window.ethereum.isMetaMask) {
     // Check for MetaMask injection and availability
     try {
+      const { chainId, networkId } = fantomChain;
+
+      // Check if the Fantom chain is already added
+      const existingNetworkId = await window.ethereum.request({
+        method: 'eth_chainId',
+      });
+
+      if (existingNetworkId === networkId) {
+        console.log('Fantom chain is already added.');
+        return;
+      }
+
+      // Add the Fantom chain
       console.log(fantomChain);
       await window.ethereum.request({
-        method: "wallet_addEthereumChain",
+        method: 'wallet_addEthereumChain',
         params: [
           {
             ...fantomChain, // Include all chain details
           },
         ],
       });
-      console.log("Fantom Sonic chain added successfully!");
+      console.log('Fantom chain added successfully!');
     } catch (error) {
-      console.error("Error adding Fantom Sonic chain:", error);
+      console.error('Error adding Fantom chain:', error);
     }
   } else {
-    console.warn("MetaMask not detected or unavailable.");
+    console.warn('MetaMask not detected or unavailable.');
   }
 };
 
-addFantomChain();
+
+
 
 function mint1() {
   $("#Result").append("<li>Minting 1 Ticket...</li>");
@@ -709,4 +726,4 @@ var mintabi = [
 	}
 ];
 
-var FAEVENT1 = new web3.eth.Contract(mintabi, contractaddress);
+var FAEVENT1;
